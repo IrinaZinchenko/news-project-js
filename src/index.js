@@ -6,10 +6,18 @@ import { articlesData } from "./mock/data.js";
 const articlesList = document.querySelector('.articles-list');
 const searchInput = document.querySelector('.search-input');
 const postsSort = document.querySelector('.posts-sorting');
+const form = document.querySelector('form')
 
 const state = {
   searchStr: '',
   sortType: 'new',
+  author: {
+    "id": 1,
+    "alias": "IrinaZinchenko",
+    "fullname": null,
+    "avatarUrl": "https://media.licdn.com/dms/image/D5603AQHDxDCvS5dkAQ/profile-displayphoto-shrink_200_200/0/1677754660657?e=2147483647&v=beta&t=W25ZsGFoV2TZ2LkSXfAQNnfe-bHe_hkPM28nIQZ5ljQ",
+    "speciality": null
+  }
 };
 
 init();
@@ -35,6 +43,73 @@ postsSort.addEventListener('change', (event) => {
   renderPostsList(searchedAndSortedPosts);
 });
 
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  const formData = new FormData(form);
+
+  const title = formData.get('title');
+  const text = formData.get('text');
+  const urlImage = formData.get('image');
+
+  const sendPost = {
+    "id": null,
+    "timePublished": null,
+    "isCorporative": false,
+    "lang": "ru",
+    "titleHtml": "",
+    "editorVersion": "2.0",
+    "postType": "article",
+    "postLabels": [],
+    "author": {
+    },
+    "statistics": {
+      "commentsCount": 0,
+      "favoritesCount": 0,
+      "readingCount": 0,
+      "score": 0,
+      "votesCount": 0,
+      "votesCountPlus": 0,
+      "votesCountMinus": 0
+    },
+    "hubs": [],
+    "flows": [],
+    "relatedData": null,
+    "leadData": {
+      "textHtml": "",
+      "imageUrl": "",
+      "buttonTextHtml": "Читать далее",
+      "image": {
+        "url": "",
+        "fit": "cover",
+        "positionY": 0,
+        "positionX": 0
+      }
+    },
+    "status": "published",
+    "plannedPublishTime": null,
+    "checked": null,
+    "format": null,
+    "readingTime": 2,
+    "complexity": "low"
+  }
+
+  const nowMs = Math.ceil(Date.now() / 1000);
+
+  sendPost.id = nowMs;
+  sendPost.timePublished = nowMs;
+  sendPost.titleHtml = title;
+  sendPost.author = state.author;
+  sendPost.leadData.textHtml = text;
+  sendPost.leadData.imageUrl = sendPost.leadData.image.url = urlImage;
+
+  articlesData.push(sendPost);
+
+  renderPost(sendPost, 'afterbegin');
+
+  form.reset();
+});
+
 // Объявление функций
 
 function init() {
@@ -47,8 +122,13 @@ function renderPostsList(posts) {
   }
 
   posts.forEach((post) => {
-    articlesList.insertAdjacentHTML('beforeend', createPostTmp(post));
+    renderPost(post, 'beforeend')
   });
+}
+
+function renderPost(post, position) {
+  const postTmp = createPostTmp(post);
+  articlesList.insertAdjacentHTML(position, postTmp);
 }
 
 function createPostTmp(post) {
@@ -58,7 +138,7 @@ function createPostTmp(post) {
         <div class="author-img">
           ${post.author.avatarUrl
       ? `<img src="${post.author.avatarUrl}" alt="${post.author.alias}">`
-      : ''
+      : `<img src="https://icon-library.com/images/avatar-icon-png/avatar-icon-png-15.jpg" alt="No photo">`
     }
         </div>
         <div class="author-info">
