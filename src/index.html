@@ -16,31 +16,35 @@
             <input type="text" class="search-input">
           </div>
 
-          <div class="posts-sorting">
-            <div class="sorting-radio radio-active">
-              <input type="radio" name="sort" id="new" value="new" checked>
-              <label for="new">Новые</label>
+          <div class="sort-and-create-news">
+            <div class="posts-sorting">
+              <div class="sorting-radio radio-active">
+                <input type="radio" name="sort" id="new" value="new" checked>
+                <label for="new">Новые</label>
+              </div>
+
+              <div class="sorting-radio">
+                <input type="radio" name="sort" id="popular" value="popular">
+                <label for="popular">Просматриваемые</label>
+              </div>
+
+              <div class="sorting-radio">
+                <input type="radio" name="sort" id="rating" value="rating">
+                <label for="rating">Высокий рейтинг</label>
+              </div>
+
+              <div class="sorting-radio">
+                <input type="radio" name="sort" id="comment" value="comment">
+                <label for="comment">Комментируемые</label>
+              </div>
             </div>
 
-            <div class="sorting-radio">
-              <input type="radio" name="sort" id="popular" value="popular">
-              <label for="popular">Просматриваемые</label>
-            </div>
-
-            <div class="sorting-radio">
-              <input type="radio" name="sort" id="rating" value="rating">
-              <label for="rating">Высокий рейтинг</label>
-            </div>
-
-            <div class="sorting-radio">
-              <input type="radio" name="sort" id="comment" value="comment">
-              <label for="comment">Комментируемые</label>
-            </div>
+            <button type="button" class="create-news-btn">Создать новость</button>
           </div>
         </div>
       </div>
 
-      <div class="form">
+      <div class="form hidden">
         <form>
           <h3 class="form-title">Создать новость</h3>
 

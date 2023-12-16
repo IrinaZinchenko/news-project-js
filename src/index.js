@@ -6,7 +6,9 @@ import { articlesData } from "./mock/data.js";
 const articlesList = document.querySelector('.articles-list');
 const searchInput = document.querySelector('.search-input');
 const postsSort = document.querySelector('.posts-sorting');
-const form = document.querySelector('form')
+const form = document.querySelector('form');
+const formDiv = document.querySelector('.form');
+const createNewsBnt = document.querySelector('.create-news-btn')
 
 const state = {
   searchStr: '',
@@ -108,6 +110,10 @@ form.addEventListener('submit', (event) => {
   renderPost(sendPost, 'afterbegin');
 
   form.reset();
+});
+
+createNewsBnt.addEventListener('click', () => {
+  formDiv.classList.toggle('hidden');
 });
 
 // Объявление функций
