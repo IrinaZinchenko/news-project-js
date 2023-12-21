@@ -18,13 +18,22 @@
       .search-input {
         box-sizing: border-box;
         width: 100%;
+        height: 36px;
+
+        padding: 0 14px;
 
         outline: none;
+        border: 1px solid #929CA5;
+      }
+
+      .search-input:focus {
+        border: 1px solid #548EAA;
       }
     }
 
     .sort-and-create-news {
       display: flex;
+      align-items: center;
 
       .posts-sorting {
         display: flex;
@@ -42,13 +51,33 @@
         .radio-active {
           label {
             text-decoration: underline;
-            color: #6F7577;
+            color: #548EAA;
           }
         }
       }
 
       .create-news-btn {
+        display: inline-flex;
+        align-items: center;
+
         margin-left: auto;
+        margin-right: 5px;
+        padding: 10px;
+
+        border: 1px solid #548EAA;
+        border-radius: 3px;
+        color: #548EAA;
+        background-color: transparent;
+        text-decoration: none;
+
+        line-height: 1.6875rem;
+      }
+
+      .create-news-btn:hover {
+        color: #FFFFFF;
+        background-color: #548EAA;
+
+        transition-duration: 0.5s;
       }
     }
   }
