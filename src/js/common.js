@@ -28,7 +28,7 @@ export function sortPosts(posts, type) {
 
 export function searchPosts(posts, searchStr) {
   const regExpSearch = new RegExp(searchStr, 'i');
-  const searchedPosts = searchStr ? posts.filter((element) => regExpSearch.test(element.titleHtml)) : articlesData;
+  const searchedPosts = searchStr ? posts.filter((element) => regExpSearch.test(element.titleHtml)) : posts;
 
   return searchedPosts;
 }

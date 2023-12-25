@@ -1,9 +1,17 @@
+import { articlesData } from "../mock/data.js";
+
+import { state } from "./state.js";
+
+import { searchAndSort } from "./common.js";
+
+import { renderPostsList, renderPost } from "./articles-list.js";
+
 export function createFilter() {
   const main = document.querySelector('main');
   const filter = createFilterCildren();
   main.insertAdjacentHTML('afterbegin', filter);
 
-  initListeners(filter);
+  initListeners(main, articlesData);
 }
 
 function createFilterCildren() {
@@ -68,16 +76,16 @@ function createFilterCildren() {
   return filterTmp;
 }
 
-function initListeners(filter) {
-  const searchInput = filter.querySelector('.search-input');
-  const postsSort = filter.querySelector('.posts-sorting');
-  const form = filter.querySelector('form');
-  const formDiv = filter.querySelector('.form');
-  const createNewsBnt = filter.querySelector('.create-news-btn');
+function initListeners(main, articlesData) {
+  const searchInput = main.querySelector('.search-input');
+  const postsSort = main.querySelector('.posts-sorting');
+  const form = main.querySelector('form');
+  const formDiv = main.querySelector('.form');
+  const createNewsBnt = main.querySelector('.create-news-btn');
 
   searchInput.addEventListener('input', (event) => {
     state.searchStr = event.target.value;
-    const searchedAndSortedPosts = searchAndSort(articlesData);
+    const searchedAndSortedPosts = searchAndSort(articlesData, state);
     renderPostsList(searchedAndSortedPosts);
   });
 
@@ -90,7 +98,7 @@ function initListeners(filter) {
 
     state.sortType = inputElem.value;
 
-    const searchedAndSortedPosts = searchAndSort(articlesData);
+    const searchedAndSortedPosts = searchAndSort(articlesData, state);
     renderPostsList(searchedAndSortedPosts);
   });
 

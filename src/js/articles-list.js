@@ -1,4 +1,6 @@
-function renderPostsList(posts) {
+const articlesList = document.querySelector('.articles-list');
+
+export function renderPostsList(posts) {
   while (articlesList.firstChild) {
     articlesList.removeChild(articlesList.lastChild);
   }
@@ -8,7 +10,7 @@ function renderPostsList(posts) {
   });
 }
 
-function renderPost(post, position) {
+export function renderPost(post, position) {
   const postTmp = createPostTmp(post);
   articlesList.insertAdjacentHTML(position, postTmp);
 }
