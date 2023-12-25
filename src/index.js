@@ -1,6 +1,8 @@
 import './index.scss';
 import './static/icons/svg-inons.svg';
 
+import { createFilter } from "./js/filter.js";
+
 import { articlesData } from "./mock/data.js";
 
 const ROOT = document.querySelector('#root');
@@ -121,9 +123,11 @@ createNewsBnt.addEventListener('click', () => {
 // Объявление функций
 
 function init() {
+  const main = document.querySelector('main');
   const filter = createFilter();
+  main.insertAdjacentHTML('afterbegin', filter);
 
-  ROOT.appendChild(filter);
+  // ROOT.appendChild(filter);
 
   renderPostsList(sortPosts(articlesData, state.sortType));
 }
