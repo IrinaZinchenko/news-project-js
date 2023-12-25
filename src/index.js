@@ -8,11 +8,11 @@ import { articlesData } from "./mock/data.js";
 const ROOT = document.querySelector('#root');
 
 const articlesList = document.querySelector('.articles-list');
-const searchInput = document.querySelector('.search-input');
-const postsSort = document.querySelector('.posts-sorting');
-const form = document.querySelector('form');
-const formDiv = document.querySelector('.form');
-const createNewsBnt = document.querySelector('.create-news-btn');
+// const searchInput = document.querySelector('.search-input');
+// const postsSort = document.querySelector('.posts-sorting');
+// const form = document.querySelector('form');
+// const formDiv = document.querySelector('.form');
+// const createNewsBnt = document.querySelector('.create-news-btn');
 
 // const state = {
 //   searchStr: '',
@@ -30,102 +30,100 @@ init();
 
 // Обработчики событий
 
-searchInput.addEventListener('input', (event) => {
-  state.searchStr = event.target.value;
-  const searchedAndSortedPosts = searchAndSort(articlesData);
-  renderPostsList(searchedAndSortedPosts);
-});
+// searchInput.addEventListener('input', (event) => {
+//   state.searchStr = event.target.value;
+//   const searchedAndSortedPosts = searchAndSort(articlesData);
+//   renderPostsList(searchedAndSortedPosts);
+// });
 
-postsSort.addEventListener('change', (event) => {
-  const inputElem = event.target;
-  const activeElem = postsSort.querySelector('.radio-active');
+// postsSort.addEventListener('change', (event) => {
+//   const inputElem = event.target;
+//   const activeElem = postsSort.querySelector('.radio-active');
 
-  activeElem.classList.remove('radio-active');
-  inputElem.parentElement.classList.add('radio-active');
+//   activeElem.classList.remove('radio-active');
+//   inputElem.parentElement.classList.add('radio-active');
 
-  state.sortType = inputElem.value;
+//   state.sortType = inputElem.value;
 
-  const searchedAndSortedPosts = searchAndSort(articlesData);
-  renderPostsList(searchedAndSortedPosts);
-});
+//   const searchedAndSortedPosts = searchAndSort(articlesData);
+//   renderPostsList(searchedAndSortedPosts);
+// });
 
-form.addEventListener('submit', (event) => {
-  event.preventDefault();
+// form.addEventListener('submit', (event) => {
+//   event.preventDefault();
 
-  const formData = new FormData(form);
+//   const formData = new FormData(form);
 
-  const title = formData.get('title');
-  const text = formData.get('text');
-  const urlImage = formData.get('image');
+//   const title = formData.get('title');
+//   const text = formData.get('text');
+//   const urlImage = formData.get('image');
 
-  const sendPost = {
-    "id": null,
-    "timePublished": null,
-    "isCorporative": false,
-    "lang": "ru",
-    "titleHtml": "",
-    "editorVersion": "2.0",
-    "postType": "article",
-    "postLabels": [],
-    "author": {
-    },
-    "statistics": {
-      "commentsCount": 0,
-      "favoritesCount": 0,
-      "readingCount": 0,
-      "score": 0,
-      "votesCount": 0,
-      "votesCountPlus": 0,
-      "votesCountMinus": 0
-    },
-    "hubs": [],
-    "flows": [],
-    "relatedData": null,
-    "leadData": {
-      "textHtml": "",
-      "imageUrl": "",
-      "buttonTextHtml": "Читать далее",
-      "image": {
-        "url": "",
-        "fit": "cover",
-        "positionY": 0,
-        "positionX": 0
-      }
-    },
-    "status": "published",
-    "plannedPublishTime": null,
-    "checked": null,
-    "format": null,
-    "readingTime": 2,
-    "complexity": "low"
-  }
+//   const sendPost = {
+//     "id": null,
+//     "timePublished": null,
+//     "isCorporative": false,
+//     "lang": "ru",
+//     "titleHtml": "",
+//     "editorVersion": "2.0",
+//     "postType": "article",
+//     "postLabels": [],
+//     "author": {
+//     },
+//     "statistics": {
+//       "commentsCount": 0,
+//       "favoritesCount": 0,
+//       "readingCount": 0,
+//       "score": 0,
+//       "votesCount": 0,
+//       "votesCountPlus": 0,
+//       "votesCountMinus": 0
+//     },
+//     "hubs": [],
+//     "flows": [],
+//     "relatedData": null,
+//     "leadData": {
+//       "textHtml": "",
+//       "imageUrl": "",
+//       "buttonTextHtml": "Читать далее",
+//       "image": {
+//         "url": "",
+//         "fit": "cover",
+//         "positionY": 0,
+//         "positionX": 0
+//       }
+//     },
+//     "status": "published",
+//     "plannedPublishTime": null,
+//     "checked": null,
+//     "format": null,
+//     "readingTime": 2,
+//     "complexity": "low"
+//   }
 
-  const nowMs = Math.ceil(Date.now() / 1000);
+//   const nowMs = Math.ceil(Date.now() / 1000);
 
-  sendPost.id = nowMs;
-  sendPost.timePublished = nowMs;
-  sendPost.titleHtml = title;
-  sendPost.author = state.author;
-  sendPost.leadData.textHtml = text;
-  sendPost.leadData.imageUrl = sendPost.leadData.image.url = urlImage;
+//   sendPost.id = nowMs;
+//   sendPost.timePublished = nowMs;
+//   sendPost.titleHtml = title;
+//   sendPost.author = state.author;
+//   sendPost.leadData.textHtml = text;
+//   sendPost.leadData.imageUrl = sendPost.leadData.image.url = urlImage;
 
-  articlesData.push(sendPost);
+//   articlesData.push(sendPost);
 
-  renderPost(sendPost, 'afterbegin');
+//   renderPost(sendPost, 'afterbegin');
 
-  form.reset();
-});
+//   form.reset();
+// });
 
-createNewsBnt.addEventListener('click', () => {
-  formDiv.classList.toggle('hidden');
-});
+// createNewsBnt.addEventListener('click', () => {
+//   formDiv.classList.toggle('hidden');
+// });
 
 // Объявление функций
 
 function init() {
-  const main = document.querySelector('main');
-  const filter = createFilter();
-  main.insertAdjacentHTML('afterbegin', filter);
+  createFilter();
 
   // ROOT.appendChild(filter);
 
