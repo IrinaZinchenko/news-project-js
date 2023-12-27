@@ -8,13 +8,13 @@ import { renderPostsList, renderPost } from "./articles-list.js";
 
 export function createFilter() {
   const main = document.querySelector('main');
-  const filter = createFilterCildren();
+  const filter = createFilterTmp();
   main.insertAdjacentHTML('afterbegin', filter);
 
   initListeners(main, articlesData);
 }
 
-function createFilterCildren() {
+function createFilterTmp() {
   const filterTmp = `<div class="filter">
   <div class="filter-wrapper">
     <h3 class="wrapper-title">Фильтр</h3>
@@ -83,93 +83,116 @@ function initListeners(main, articlesData) {
   const formDiv = main.querySelector('.form');
   const createNewsBnt = main.querySelector('.create-news-btn');
 
-  searchInput.addEventListener('input', (event) => {
-    state.searchStr = event.target.value;
-    const searchedAndSortedPosts = searchAndSort(articlesData, state);
-    renderPostsList(searchedAndSortedPosts);
-  });
+  searchInput.addEventListener('input', search);
 
   postsSort.addEventListener('change', (event) => {
-    const inputElem = event.target;
-    const activeElem = postsSort.querySelector('.radio-active');
-
-    activeElem.classList.remove('radio-active');
-    inputElem.parentElement.classList.add('radio-active');
-
-    state.sortType = inputElem.value;
-
-    const searchedAndSortedPosts = searchAndSort(articlesData, state);
-    renderPostsList(searchedAndSortedPosts);
+    sort(event, postsSort);
   });
 
   form.addEventListener('submit', (event) => {
     event.preventDefault();
-
-    const formData = new FormData(form);
-
-    const title = formData.get('title');
-    const text = formData.get('text');
-    const urlImage = formData.get('image');
-
-    const sendPost = {
-      "id": null,
-      "timePublished": null,
-      "isCorporative": false,
-      "lang": "ru",
-      "titleHtml": "",
-      "editorVersion": "2.0",
-      "postType": "article",
-      "postLabels": [],
-      "author": {
-      },
-      "statistics": {
-        "commentsCount": 0,
-        "favoritesCount": 0,
-        "readingCount": 0,
-        "score": 0,
-        "votesCount": 0,
-        "votesCountPlus": 0,
-        "votesCountMinus": 0
-      },
-      "hubs": [],
-      "flows": [],
-      "relatedData": null,
-      "leadData": {
-        "textHtml": "",
-        "imageUrl": "",
-        "buttonTextHtml": "Читать далее",
-        "image": {
-          "url": "",
-          "fit": "cover",
-          "positionY": 0,
-          "positionX": 0
-        }
-      },
-      "status": "published",
-      "plannedPublishTime": null,
-      "checked": null,
-      "format": null,
-      "readingTime": 2,
-      "complexity": "low"
-    }
-
-    const nowMs = Math.ceil(Date.now() / 1000);
-
-    sendPost.id = nowMs;
-    sendPost.timePublished = nowMs;
-    sendPost.titleHtml = title;
-    sendPost.author = state.author;
-    sendPost.leadData.textHtml = text;
-    sendPost.leadData.imageUrl = sendPost.leadData.image.url = urlImage;
-
-    articlesData.push(sendPost);
-
-    renderPost(sendPost, 'afterbegin');
-
-    form.reset();
+    createNews(form);
+    toggleShowCreateNewsForm(formDiv);
   });
 
   createNewsBnt.addEventListener('click', () => {
-    formDiv.classList.toggle('hidden');
+    toggleShowCreateNewsForm(formDiv);
   });
 }
+
+function search(event) {
+  state.searchStr = event.target.value;
+  const searchedAndSortedPosts = searchAndSort(articlesData, state);
+  renderPostsList(searchedAndSortedPosts);
+  // searchedAndSortedPosts.length === 0 ? renderPostsList(searchedAndSortedPosts) : createAlertMessage(main);
+}
+
+function sort(event, postsSort) {
+  const inputElem = event.target;
+  const activeElem = postsSort.querySelector('.radio-active');
+
+  activeElem.classList.remove('radio-active');
+  inputElem.parentElement.classList.add('radio-active');
+
+  state.sortType = inputElem.value;
+
+  const searchedAndSortedPosts = searchAndSort(articlesData, state);
+  renderPostsList(searchedAndSortedPosts);
+}
+
+function createNews(form) {
+  const formData = new FormData(form);
+
+  const title = formData.get('title');
+  const text = formData.get('text');
+  const urlImage = formData.get('image');
+
+  const sendPost = {
+    "id": null,
+    "timePublished": null,
+    "isCorporative": false,
+    "lang": "ru",
+    "titleHtml": "",
+    "editorVersion": "2.0",
+    "postType": "article",
+    "postLabels": [],
+    "author": {
+    },
+    "statistics": {
+      "commentsCount": 0,
+      "favoritesCount": 0,
+      "readingCount": 0,
+      "score": 0,
+      "votesCount": 0,
+      "votesCountPlus": 0,
+      "votesCountMinus": 0
+    },
+    "hubs": [],
+    "flows": [],
+    "relatedData": null,
+    "leadData": {
+      "textHtml": "",
+      "imageUrl": "",
+      "buttonTextHtml": "Читать далее",
+      "image": {
+        "url": "",
+        "fit": "cover",
+        "positionY": 0,
+        "positionX": 0
+      }
+    },
+    "status": "published",
+    "plannedPublishTime": null,
+    "checked": null,
+    "format": null,
+    "readingTime": 2,
+    "complexity": "low"
+  }
+
+  const nowMs = Math.ceil(Date.now() / 1000);
+
+  sendPost.id = nowMs;
+  sendPost.timePublished = nowMs;
+  sendPost.titleHtml = title;
+  sendPost.author = state.author;
+  sendPost.leadData.textHtml = text;
+  sendPost.leadData.imageUrl = sendPost.leadData.image.url = urlImage;
+
+  articlesData.push(sendPost);
+
+  renderPost(sendPost, 'afterbegin');
+
+  form.reset();
+}
+
+function toggleShowCreateNewsForm(formDiv) {
+  formDiv.classList.toggle('hidden');
+}
+
+// function createAlertMessage(main) {
+//   let div = document.createElement('div');
+//   div.className = 'alert';
+//   div.innerHTML = '<p>Не найдено статей по вашему запросу. Попродуйте другой запрос.</p>';
+
+//   main.insertAdjacentElement('beforeend', div);;
+// }
