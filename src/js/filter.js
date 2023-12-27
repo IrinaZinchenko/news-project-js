@@ -91,8 +91,7 @@ function initListeners(main, articlesData) {
 
   form.addEventListener('submit', (event) => {
     event.preventDefault();
-    createNews(form);
-    toggleShowCreateNewsForm(formDiv);
+    createNews(form, formDiv);
   });
 
   createNewsBnt.addEventListener('click', () => {
@@ -120,12 +119,14 @@ function sort(event, postsSort) {
   renderPostsList(searchedAndSortedPosts);
 }
 
-function createNews(form) {
+function createNews(form, formDiv) {
   const formData = new FormData(form);
 
   const title = formData.get('title');
   const text = formData.get('text');
   const urlImage = formData.get('image');
+
+  if (!title || !text) return;
 
   const sendPost = {
     "id": null,
@@ -176,13 +177,16 @@ function createNews(form) {
   sendPost.titleHtml = title;
   sendPost.author = state.author;
   sendPost.leadData.textHtml = text;
-  sendPost.leadData.imageUrl = sendPost.leadData.image.url = urlImage;
+  sendPost.leadData.imageUrl = urlImage ? urlImage : null;
+  sendPost.leadData.image.url = urlImage ? urlImage : null;
 
   articlesData.push(sendPost);
 
   renderPost(sendPost, 'afterbegin');
 
   form.reset();
+
+  toggleShowCreateNewsForm(formDiv);
 }
 
 function toggleShowCreateNewsForm(formDiv) {

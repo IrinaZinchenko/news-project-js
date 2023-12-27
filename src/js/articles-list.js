@@ -62,7 +62,7 @@ function createPostTmp(post) {
 
       <div class="article-body">
         <div class="cover">
-          ${post.leadData.image
+          ${post.leadData.imageUrl
       ? `<img src="${post.leadData.image.url}" alt="${post.leadData.image.fit}">`
       : ''
     }
