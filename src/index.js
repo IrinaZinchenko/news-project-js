@@ -1,22 +1,29 @@
 import './index.scss';
 import './static/icons/svg-inons.svg';
 
-import { createFilter } from "./js/filter.js";
+// import { createFilter } from "./js/filter.js";
 
-import { articlesData } from "./mock/data.js";
+// import { articlesData } from "./mock/data.js";
 
-import { renderPostsList } from "./js/articles-list.js";
+// import { renderPostsList } from "./js/articles-list.js";
 
-import { state } from "./js/state.js";
+// import { state } from "./js/state.js";
 
-import { sortPosts } from "./js/common.js";
+// import { sortPosts } from "./js/common.js";
+
+import router from "./js/submodules/index.js";
+
+import { Main } from './js/pages/main/index.js';
+import { Post } from './js/pages/post/index.js';
 
 const ROOT = document.querySelector('#root');
 
+const routes = [{ path: '/', view: Main }, { path: '/post', view: Post }];
 init();
 
 function init() {
-  createFilter();
+  router.initRouter({ target: ROOT, routes: routes });
+  // createFilter();
 
-  renderPostsList(sortPosts(articlesData, state.sortType));
+  // renderPostsList(sortPosts(articlesData, state.sortType));
 }

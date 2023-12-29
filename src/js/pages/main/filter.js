@@ -1,6 +1,6 @@
-import { articlesData } from "../mock/data.js";
+import { articlesData } from "../../../mock/data.js";
 
-import { state } from "./state.js";
+import { state } from "../../state/index.js";
 
 import { searchAndSort } from "./common.js";
 
