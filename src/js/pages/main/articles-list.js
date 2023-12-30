@@ -1,18 +1,27 @@
-const articlesList = document.querySelector('.articles-list');
+// const articlesList = document.querySelector('.articles-list');
 
-export function renderPostsList(posts) {
-  while (articlesList.firstChild) {
-    articlesList.removeChild(articlesList.lastChild);
+export function createArticlesList(posts) {
+  const articlesListElem = document.createElement('div');
+  articlesListElem.classList.add('articles-list');
+
+  renderPostsList(posts, articlesListElem);
+
+  return articlesListElem;
+}
+
+export function renderPostsList(posts, elem) {
+  while (elem.firstChild) {
+    elem.removeChild(elem.lastChild);
   }
 
   posts.forEach((post) => {
-    renderPost(post, 'beforeend')
+    renderPost(post, 'beforeend', elem);
   });
 }
 
-export function renderPost(post, position) {
+export function renderPost(post, position, elem) {
   const postTmp = createPostTmp(post);
-  articlesList.insertAdjacentHTML(position, postTmp);
+  elem.insertAdjacentHTML(position, postTmp);
 }
 
 function createPostTmp(post) {

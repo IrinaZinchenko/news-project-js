@@ -1,7 +1,7 @@
 import './index.scss';
 import './static/icons/svg-inons.svg';
 
-// import { createFilter } from "./js/filter.js";
+import { createFilter } from './js/pages/main/filter.js';
 
 // import { articlesData } from "./mock/data.js";
 
@@ -16,14 +16,14 @@ import router from "./js/submodules/index.js";
 import { Main } from './js/pages/main/index.js';
 import { Post } from './js/pages/post/index.js';
 
-const ROOT = document.querySelector('#root');
+export const ROOT = document.querySelector('#root');
 
 const routes = [{ path: '/', view: Main }, { path: '/post', view: Post }];
 init();
 
 function init() {
   router.initRouter({ target: ROOT, routes: routes });
-  // createFilter();
+  createFilter();
 
   // renderPostsList(sortPosts(articlesData, state.sortType));
 }

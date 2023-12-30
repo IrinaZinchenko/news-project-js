@@ -1,22 +1,23 @@
 import { articlesData } from "../../../mock/data.js";
+import { state } from "../../state/index.js"
 
-import { state } from "../../state/index.js";
+import { searchAndSort } from "../../pages/main/common.js";
+import { renderPostsList, renderPost } from "../../pages/main/articles-list.js";
 
-import { searchAndSort } from "./common.js";
+export function createFilter(elem) {
+  const filterWrapperAndForm = createFilterAndFormTmp();
 
-import { renderPostsList, renderPost } from "./articles-list.js";
+  const filter = document.createElement('div');
+  filter.classList.add('filter');
+  filter.insertAdjacentHTML('afterbegin', filterWrapperAndForm);
 
-export function createFilter() {
-  const main = document.querySelector('main');
-  const filter = createFilterTmp();
-  main.insertAdjacentHTML('afterbegin', filter);
+  initListeners(filter, elem);
 
-  initListeners(main, articlesData);
+  return filter;
 }
 
-function createFilterTmp() {
-  const filterTmp = `<div class="filter">
-  <div class="filter-wrapper">
+function createFilterAndFormTmp() {
+  const filterAndFormTmp = `<div class="filter-wrapper">
     <h3 class="wrapper-title">Фильтр</h3>
     <div class="posts-search">
       <input type="text" class="search-input" placeholder="Поиск">
@@ -48,7 +49,6 @@ function createFilterTmp() {
       <button type="button" class="create-news-btn">Создать новость</button>
     </div>
   </div>
-</div>
 
 <div class="form hidden">
   <form>
@@ -73,25 +73,27 @@ function createFilterTmp() {
   </form>
 </div>`;
 
-  return filterTmp;
+  return filterAndFormTmp;
 }
 
-function initListeners(main, articlesData) {
-  const searchInput = main.querySelector('.search-input');
-  const postsSort = main.querySelector('.posts-sorting');
-  const form = main.querySelector('form');
-  const formDiv = main.querySelector('.form');
-  const createNewsBnt = main.querySelector('.create-news-btn');
+function initListeners(filter, elem) {
+  const searchInput = filter.querySelector('.search-input');
+  const postsSort = filter.querySelector('.posts-sorting');
+  const form = filter.querySelector('form');
+  const formDiv = filter.querySelector('.form');
+  const createNewsBnt = filter.querySelector('.create-news-btn');
 
-  searchInput.addEventListener('input', search);
+  searchInput.addEventListener('input', (event) => {
+    search(event, elem);
+  });
 
   postsSort.addEventListener('change', (event) => {
-    sort(event, postsSort);
+    sort(event, postsSort, elem);
   });
 
   form.addEventListener('submit', (event) => {
     event.preventDefault();
-    createNews(form, formDiv);
+    createNews(form, formDiv, elem);
   });
 
   createNewsBnt.addEventListener('click', () => {
@@ -99,14 +101,14 @@ function initListeners(main, articlesData) {
   });
 }
 
-function search(event) {
+function search(event, elem) {
   state.searchStr = event.target.value;
   const searchedAndSortedPosts = searchAndSort(articlesData, state);
-  renderPostsList(searchedAndSortedPosts);
+  renderPostsList(searchedAndSortedPosts, elem);
   // searchedAndSortedPosts.length === 0 ? renderPostsList(searchedAndSortedPosts) : createAlertMessage(main);
 }
 
-function sort(event, postsSort) {
+function sort(event, postsSort, elem) {
   const inputElem = event.target;
   const activeElem = postsSort.querySelector('.radio-active');
 
@@ -116,10 +118,10 @@ function sort(event, postsSort) {
   state.sortType = inputElem.value;
 
   const searchedAndSortedPosts = searchAndSort(articlesData, state);
-  renderPostsList(searchedAndSortedPosts);
+  renderPostsList(searchedAndSortedPosts, elem);
 }
 
-function createNews(form, formDiv) {
+function createNews(form, formDiv, elem) {
   const formData = new FormData(form);
 
   const title = formData.get('title');
@@ -182,7 +184,7 @@ function createNews(form, formDiv) {
 
   articlesData.push(sendPost);
 
-  renderPost(sendPost, 'afterbegin');
+  renderPost(sendPost, 'afterbegin', elem);
 
   form.reset();
 
