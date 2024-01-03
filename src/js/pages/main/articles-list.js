@@ -1,5 +1,3 @@
-// const articlesList = document.querySelector('.articles-list');
-
 export function createArticlesList(posts) {
   const articlesListElem = document.createElement('div');
   articlesListElem.classList.add('articles-list');
