@@ -8,12 +8,14 @@ export const Login = () => {
         <label for="username">Имя пользователя</label>
         <input id="username" name="username" type="text" placeholder="Введите имя">
       </div>
+      
       <div class="form-field">
         <label for="password">Пароль</label>
         <input id="password" name="password" type="password" placeholder="Введите пароль">
       </div>
 
       <a href="/" class="log-in-btn">Войти</a>
+      <a href="/sign-up" class="sign-up-btn">Зарегистрироваться</a>
     </form>
   `;
 

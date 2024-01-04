@@ -1,0 +1,10 @@
+main {
+  width: 90%;
+  max-width: 780px;
+
+  @import "../filter/filter";
+
+  @import "../form/form";
+
+  @import "../articles-list/articles-list";
+}

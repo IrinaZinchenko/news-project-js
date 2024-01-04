@@ -24,16 +24,9 @@ body {
 
   @import "pages/login";
 
-  main {
-    width: 90%;
-    max-width: 780px;
+  @import "pages/signup";
 
-    @import "filter/filter";
-
-    @import "form/form";
-
-    @import "articles-list/articles-list";
-  }
+  @import "pages/main";
 }
 
 // .alert {
