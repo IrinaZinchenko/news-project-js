@@ -10,14 +10,22 @@ import { Signup } from './js/pages/auth/singup/index.js';
 
 const ROOT = document.querySelector('#root');
 
-const routes = [
+const routes = checkAuth() ? [
   { path: '/', view: Main },
+] : [
   { path: '/log-in', view: Login },
   { path: '/sign-up', view: Signup },
+  { path: '/*', view: Login },
 ];
 
 init();
 
 function init() {
   router.initRouter({ target: ROOT, routes: routes });
+}
+
+function checkAuth() {
+  const auth = sessionStorage.getItem("auth");
+
+  return Boolean(auth);
 }
