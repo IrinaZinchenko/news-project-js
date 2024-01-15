@@ -33,7 +33,7 @@ export const Login = () => {
 
   const loginBtn = elem.querySelector('.log-in-btn');
 
-  loginBtn.addEventListener('click', () => {
+  loginBtn.addEventListener('click', (event) => {
     const form = elem.querySelector('.log-in-form');
 
     const formData = new FormData(form);
@@ -54,6 +54,8 @@ export const Login = () => {
           sessionStorage.clear();
         }
       }
+    } else {
+      event.preventDefault();
     }
   });
 
