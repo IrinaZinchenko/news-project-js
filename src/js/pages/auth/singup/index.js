@@ -27,5 +27,35 @@ export const Signup = () => {
 
   elem.insertAdjacentHTML('afterbegin', signupTmp);
 
+  const signupBtn = elem.querySelector('.sign-up-btn');
+
+  signupBtn.addEventListener('click', (event) => {
+    const form = elem.querySelector('.sign-up-form');
+
+    const formData = new FormData(form);
+
+    const userName = formData.get('username');
+    const password = formData.get('password');
+    const confirmPassword = formData.get('confirm-password');
+
+    if (userName && password && confirmPassword) {
+      const usersJSON = localStorage.getItem('users');
+
+      if (usersJSON) {
+        const users = JSON.parse(usersJSON);
+
+        users.push({
+          id: Date.now(),
+          userName,
+          password
+        });
+
+        localStorage.setItem('users', JSON.stringify(users));
+      }
+    } else {
+      event.preventDefault();
+    }
+  });
+
   return elem;
 }

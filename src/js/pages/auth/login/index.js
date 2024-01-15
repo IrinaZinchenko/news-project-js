@@ -45,9 +45,9 @@ export const Login = () => {
       const usersJSON = localStorage.getItem('users');
 
       if (usersJSON) {
-        const urers = JSON.parse(usersJSON);
+        const users = JSON.parse(usersJSON);
 
-        const foundUser = urers.find((user) => user.userName == userName && user.password == password);
+        const foundUser = users.find((user) => user.userName == userName && user.password == password);
         if (foundUser) {
           sessionStorage.setItem('auth', 'true');
         } else {
