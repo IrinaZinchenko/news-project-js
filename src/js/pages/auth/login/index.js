@@ -1,16 +1,8 @@
+import router from '../../../submodules/spa-router/index.js'
+
 export const Login = () => {
   const elem = document.createElement('div');
   elem.classList.add('log-in');
-
-  // const users = [
-  //   {
-  //     id: 1,
-  //     userName: 'Irina',
-  //     password: '12345',
-  //   },
-  // ];
-
-  // localStorage.setItem('users', JSON.stringify(users));
 
   const loginTmp = `
     <form class="log-in-form">
@@ -33,7 +25,8 @@ export const Login = () => {
 
   const loginBtn = elem.querySelector('.log-in-btn');
 
-  loginBtn.addEventListener('click', (event) => {
+  loginBtn.addEventListener('click', async (event) => {
+    event.preventDefault();
     const form = elem.querySelector('.log-in-form');
 
     const formData = new FormData(form);
@@ -42,22 +35,29 @@ export const Login = () => {
     const password = formData.get('password');
 
     if (userName && password) {
-      const usersJSON = localStorage.getItem('users');
+      // const usersJSON = localStorage.getItem('users');
 
-      if (usersJSON) {
-        const users = JSON.parse(usersJSON);
+      const users = await login();
 
-        const foundUser = users.find((user) => user.userName == userName && user.password == password);
+      if (users.length) {
+        // const users = JSON.parse(usersJSON);
+
+        const foundUser = users.find((user) => user.name == userName && user.password == password);
         if (foundUser) {
-          sessionStorage.setItem('auth', 'true');
+          sessionStorage.setItem('token', foundUser.token);
+          router.navigate('/');
         } else {
           sessionStorage.clear();
         }
       }
-    } else {
-      event.preventDefault();
     }
   });
 
   return elem;
+}
+
+async function login() {
+  const response = await fetch("http://localhost:3001/users");
+  const users = await response.json();
+  return users;
 }

@@ -1,7 +1,7 @@
 import './index.scss';
 import './static/icons/svg-inons.svg';
 
-import router from "./js/submodules/index.js";
+import router from "./js/submodules/spa-router/index.js";
 
 import { Main } from './js/pages/main/index.js';
 // import { Post } from './js/pages/post/index.js';
@@ -25,7 +25,7 @@ function init() {
 }
 
 function checkAuth() {
-  const auth = sessionStorage.getItem("auth");
+  const auth = sessionStorage.getItem('token');
 
   return Boolean(auth);
 }

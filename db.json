@@ -12,11 +12,12 @@
   "users": [
     {
       "id": 1,
-      "name": "Irina"
-    },
-    {
-      "id": 2,
-      "name": "Ivan"
+      "alias": "IrinaZinchenko",
+      "name": "Irina",
+      "password": "12345",
+      "token": "vp9bmq13j0g",
+      "avatarUrl": "https://media.licdn.com/dms/image/D5603AQHDxDCvS5dkAQ/profile-displayphoto-shrink_200_200/0/1677754660657?e=2147483647&v=beta&t=W25ZsGFoV2TZ2LkSXfAQNnfe-bHe_hkPM28nIQZ5ljQ",
+      "speciality": null
     }
   ]
 }
