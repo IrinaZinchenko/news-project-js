@@ -25,7 +25,7 @@ function init() {
 }
 
 function checkAuth() {
-  const auth = sessionStorage.getItem('token');
+  const auth = localStorage.getItem('token');
 
   return Boolean(auth);
 }

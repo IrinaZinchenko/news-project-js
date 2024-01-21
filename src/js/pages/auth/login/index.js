@@ -35,20 +35,13 @@ export const Login = () => {
     const password = formData.get('password');
 
     if (userName && password) {
-      // const usersJSON = localStorage.getItem('users');
+      const user = await login(userName, password);
 
-      const users = await login();
-
-      if (users.length) {
-        // const users = JSON.parse(usersJSON);
-
-        const foundUser = users.find((user) => user.name == userName && user.password == password);
-        if (foundUser) {
-          sessionStorage.setItem('token', foundUser.token);
-          router.navigate('/');
-        } else {
-          sessionStorage.clear();
-        }
+      if (user) {
+        localStorage.setItem('token', user.token);
+        router.navigate('/');
+      } else {
+        localStorage.clear();
       }
     }
   });
@@ -56,8 +49,9 @@ export const Login = () => {
   return elem;
 }
 
-async function login() {
-  const response = await fetch("http://localhost:3001/users");
-  const users = await response.json();
-  return users;
+async function login(name, password) {
+  const response = await fetch(`http://localhost:3001/users?name=${name}&password=${password}`);
+  const user = await response.json();
+
+  return user ? user[0] : undefined;
 }
