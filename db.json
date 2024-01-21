@@ -1,0 +1,22 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "a title"
+    },
+    {
+      "id": "2",
+      "title": "another title"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Irina"
+    },
+    {
+      "id": 2,
+      "name": "Ivan"
+    }
+  ]
+}
