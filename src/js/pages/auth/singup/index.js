@@ -1,5 +1,3 @@
-// Пока что это копия log-in
-
 export const Signup = () => {
   const elem = document.createElement('div');
   elem.classList.add('sign-up');
