@@ -8,6 +8,8 @@ import { sortPosts } from "./common.js";
 export const Main = () => {
   const wrapper = document.createDocumentFragment();
 
+  // console.log(state.user);
+
   const posts = sortPosts(articlesData, state.sortType);
   const articlesList = createArticlesList(posts);
 
