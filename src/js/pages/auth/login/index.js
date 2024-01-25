@@ -1,7 +1,5 @@
 import router from '../../../submodules/spa-router/index.js';
 
-import { state } from '../../../state/index.js';
-
 export const Login = () => {
   const elem = document.createElement('div');
   elem.classList.add('log-in');

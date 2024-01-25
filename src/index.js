@@ -7,6 +7,7 @@ import { state } from './js/state/index.js';
 import { Main } from './js/pages/main/index.js';
 import { Login } from './js/pages/auth/login/index.js';
 import { Signup } from './js/pages/auth/singup/index.js';
+// import { Post } from './js/pages/post/index.js';
 
 const ROOT = document.querySelector('#root');
 

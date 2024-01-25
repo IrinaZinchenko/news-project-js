@@ -1,16 +1,16 @@
-import { articlesData } from "../../../mock/data.js";
 import { state } from "../../state/index.js";
 
 import { createFilter } from "./filter.js";
 import { createArticlesList } from "./articles-list.js";
 import { sortPosts } from "./common.js";
 
-export const Main = () => {
+export const Main = async () => {
   const wrapper = document.createDocumentFragment();
 
-  // console.log(state.user);
+  const postData = await getPosts();
+  state.posts = postData;
 
-  const posts = sortPosts(articlesData, state.sortType);
+  const posts = sortPosts(state.posts, state.sortType);
   const articlesList = createArticlesList(posts);
 
   const main = document.createElement('main');
@@ -22,4 +22,11 @@ export const Main = () => {
   wrapper.append(main);
 
   return wrapper;
+}
+
+async function getPosts() {
+  const response = await fetch('http://localhost:3001/posts');
+  const posts = await response.json();
+
+  return posts;
 }

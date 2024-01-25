@@ -1,4 +1,3 @@
-import { articlesData } from "../../../mock/data.js";
 import { state } from "../../state/index.js"
 
 import { searchAndSort } from "../../pages/main/common.js";
@@ -103,9 +102,8 @@ function initListeners(filter, elem) {
 
 function search(event, elem) {
   state.searchStr = event.target.value;
-  const searchedAndSortedPosts = searchAndSort(articlesData, state);
+  const searchedAndSortedPosts = searchAndSort(state);
   renderPostsList(searchedAndSortedPosts, elem);
-  // searchedAndSortedPosts.length === 0 ? renderPostsList(searchedAndSortedPosts) : createAlertMessage(main);
 }
 
 function sort(event, postsSort, elem) {
@@ -117,7 +115,7 @@ function sort(event, postsSort, elem) {
 
   state.sortType = inputElem.value;
 
-  const searchedAndSortedPosts = searchAndSort(articlesData, state);
+  const searchedAndSortedPosts = searchAndSort(state);
   renderPostsList(searchedAndSortedPosts, elem);
 }
 
@@ -182,7 +180,7 @@ function createNews(form, formDiv, elem) {
   sendPost.leadData.imageUrl = urlImage ? urlImage : null;
   sendPost.leadData.image.url = urlImage ? urlImage : null;
 
-  articlesData.push(sendPost);
+  // articlesData.push(sendPost);
 
   renderPost(sendPost, 'afterbegin', elem);
 
@@ -194,11 +192,3 @@ function createNews(form, formDiv, elem) {
 function toggleShowCreateNewsForm(formDiv) {
   formDiv.classList.toggle('hidden');
 }
-
-// function createAlertMessage(main) {
-//   let div = document.createElement('div');
-//   div.className = 'alert';
-//   div.innerHTML = '<p>Не найдено статей по вашему запросу. Попродуйте другой запрос.</p>';
-
-//   main.insertAdjacentElement('beforeend', div);;
-// }

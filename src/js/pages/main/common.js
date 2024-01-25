@@ -33,9 +33,9 @@ export function searchPosts(posts, searchStr) {
   return searchedPosts;
 }
 
-export function searchAndSort(posts, state) {
-  const searchedPosts = searchPosts(posts, state.searchStr);
-  const sortedPosts = sortPosts(searchedPosts, state.sortType);
+export function searchAndSort({ posts, searchStr, sortType }) {
+  const searchedPosts = searchPosts(posts, searchStr);
+  const sortedPosts = sortPosts(searchedPosts, sortType);
 
   return sortedPosts;
 }
