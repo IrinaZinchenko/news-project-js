@@ -90,9 +90,9 @@ function initListeners(filter, elem) {
     sort(event, postsSort, elem);
   });
 
-  form.addEventListener('submit', (event) => {
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    createNews(form, formDiv, elem);
+    await onCreatePostClick(form, formDiv, elem);
   });
 
   createNewsBnt.addEventListener('click', () => {
@@ -119,7 +119,7 @@ function sort(event, postsSort, elem) {
   renderPostsList(searchedAndSortedPosts, elem);
 }
 
-function createNews(form, formDiv, elem) {
+async function onCreatePostClick(form, formDiv, elem) {
   const formData = new FormData(form);
 
   const title = formData.get('title');
@@ -128,7 +128,7 @@ function createNews(form, formDiv, elem) {
 
   if (!title || !text) return;
 
-  const sendPost = {
+  const newPost = {
     "id": null,
     "timePublished": null,
     "isCorporative": false,
@@ -137,8 +137,7 @@ function createNews(form, formDiv, elem) {
     "editorVersion": "2.0",
     "postType": "article",
     "postLabels": [],
-    "author": {
-    },
+    "author": {},
     "statistics": {
       "commentsCount": 0,
       "favoritesCount": 0,
@@ -168,21 +167,21 @@ function createNews(form, formDiv, elem) {
     "format": null,
     "readingTime": 2,
     "complexity": "low"
-  }
+  };
 
   const nowMs = Math.ceil(Date.now() / 1000);
 
-  sendPost.id = nowMs;
-  sendPost.timePublished = nowMs;
-  sendPost.titleHtml = title;
-  sendPost.author = state.author;
-  sendPost.leadData.textHtml = text;
-  sendPost.leadData.imageUrl = urlImage ? urlImage : null;
-  sendPost.leadData.image.url = urlImage ? urlImage : null;
+  newPost.id = String(nowMs);
+  newPost.timePublished = nowMs;
+  newPost.titleHtml = title;
+  newPost.author = state.user;
+  newPost.leadData.textHtml = text;
+  newPost.leadData.imageUrl = urlImage ? urlImage : null;
+  newPost.leadData.image.url = urlImage ? urlImage : null;
 
-  // articlesData.push(sendPost);
+  await createPost(newPost);
 
-  renderPost(sendPost, 'afterbegin', elem);
+  renderPost(newPost, 'afterbegin', elem);
 
   form.reset();
 
@@ -191,4 +190,15 @@ function createNews(form, formDiv, elem) {
 
 function toggleShowCreateNewsForm(formDiv) {
   formDiv.classList.toggle('hidden');
+}
+
+async function createPost(newPost) {
+  const response = await fetch('http://localhost:3001/posts', {
+    method: 'POST',
+    body: JSON.stringify(newPost)
+  });
+
+  const post = await response.json();
+
+  return post;
 }
