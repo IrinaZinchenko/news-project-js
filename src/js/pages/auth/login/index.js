@@ -49,7 +49,7 @@ export const Login = () => {
   return elem;
 }
 
-async function login(name, password) {
+export async function login(name, password) {
   const response = await fetch(`http://localhost:3001/users?name=${name}&password=${password}`);
   const user = await response.json();
 

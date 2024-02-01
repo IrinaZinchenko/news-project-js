@@ -1646,7 +1646,7 @@
   ],
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "alias": "IrinaZinchenko",
       "name": "Irina",
       "password": "12345",

@@ -1,3 +1,6 @@
+import router from '../../../submodules/spa-router/index.js';
+import { login } from '../login/index.js';
+
 export const Signup = () => {
   const elem = document.createElement('div');
   elem.classList.add('sign-up');
@@ -27,7 +30,8 @@ export const Signup = () => {
 
   const signupBtn = elem.querySelector('.sign-up-btn');
 
-  signupBtn.addEventListener('click', (event) => {
+  signupBtn.addEventListener('click', async (event) => {
+    event.preventDefault();
     const form = elem.querySelector('.sign-up-form');
 
     const formData = new FormData(form);
@@ -36,24 +40,47 @@ export const Signup = () => {
     const password = formData.get('password');
     const confirmPassword = formData.get('confirm-password');
 
-    if (userName && password && confirmPassword) {
-      const usersJSON = localStorage.getItem('users');
+    if (!userName || !password || !confirmPassword) {
+      return;
+    }
 
-      if (usersJSON) {
-        const users = JSON.parse(usersJSON);
+    const newUser = {
+      "id": String(Date.now()),
+      "alias": `${userName}`,
+      "name": `${password}`,
+      "password": `${password}`,
+      "token": `${createToken()}`,
+      "avatarUrl": null,
+      "speciality": null
+    }
 
-        users.push({
-          id: Date.now(),
-          userName,
-          password
-        });
+    const createdUser = await createUser(newUser);
+    const loginUser = await login(createdUser.name, createdUser.password);
 
-        localStorage.setItem('users', JSON.stringify(users));
-      }
+    if (loginUser) {
+      localStorage.setItem('token', loginUser.token);
+      router.navigate('/');
     } else {
-      event.preventDefault();
+      localStorage.clear();
     }
   });
 
   return elem;
+}
+
+async function createUser(newUser) {
+  console.log(newUser)
+  const response = await fetch('http://localhost:3001/users', {
+    method: 'POST',
+    body: JSON.stringify(newUser)
+  });
+
+  const user = await response.json();
+  console.log(user);
+
+  return user;
+}
+
+function createToken() {
+  return Math.random().toString(36).substr(2);
 }
