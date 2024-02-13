@@ -19,7 +19,8 @@ body {
 
 #root {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
 
   @import "pages/login";
@@ -28,10 +29,3 @@ body {
 
   @import "pages/main";
 }
-
-// .alert {
-//   display: flex;
-//   justify-content: center;
-
-//   width: 100%;
-// }

@@ -62,7 +62,7 @@
 
         margin-left: auto;
         margin-right: 5px;
-        padding: 10px;
+        padding: 5px 10px;
 
         border: 1px solid #548EAA;
         border-radius: 3px;
@@ -76,6 +76,7 @@
       .create-news-btn:hover {
         color: #FFFFFF;
         background-color: #548EAA;
+        cursor: pointer;
 
         transition-duration: 0.5s;
       }

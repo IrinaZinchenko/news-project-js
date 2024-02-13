@@ -1,5 +1,6 @@
 import { state } from "../../state/index.js";
 
+import { createHeader } from "./header.js";
 import { createFilter } from "./filter.js";
 import { createArticlesList } from "./articles-list.js";
 import { sortPosts } from "./common.js";
@@ -13,13 +14,15 @@ export const Main = async () => {
   const posts = sortPosts(state.posts, state.sortType);
   const articlesList = createArticlesList(posts);
 
+  const header = createHeader();
+
   const main = document.createElement('main');
   main.append(articlesList);
 
   const filter = createFilter(articlesList);
   main.prepend(filter);
 
-  wrapper.append(main);
+  wrapper.append(header, main);
 
   return wrapper;
 }

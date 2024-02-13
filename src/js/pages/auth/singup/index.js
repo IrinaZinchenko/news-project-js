@@ -47,7 +47,7 @@ export const Signup = () => {
     const newUser = {
       "id": String(Date.now()),
       "alias": `${userName}`,
-      "name": `${password}`,
+      "name": `${userName}`,
       "password": `${password}`,
       "token": `${createToken()}`,
       "avatarUrl": null,
@@ -61,6 +61,7 @@ export const Signup = () => {
       localStorage.setItem('token', loginUser.token);
       router.navigate('/');
     } else {
+      event.preventDefault();
       localStorage.clear();
     }
   });
